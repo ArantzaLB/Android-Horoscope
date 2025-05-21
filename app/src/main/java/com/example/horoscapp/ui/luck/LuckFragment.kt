@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.horoscapp.R
 import com.example.horoscapp.databinding.FragmentLuckBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LuckFragment : Fragment() {
+
 
     /**
      * Declara una variable privada y opcional (nullable) para almacenar el binding.
@@ -16,7 +19,6 @@ class LuckFragment : Fragment() {
      * Al inicio está en null porque el View del fragmento todavía no se ha creado.
      */
     private var _binding: FragmentLuckBinding? = null
-
     /**
      * Crea una propiedad solo de lectura (val) llamada binding.
      * Cada vez que accedes a binding, estás accediendo a _binding!!
