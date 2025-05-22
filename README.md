@@ -6,5 +6,5 @@
 
 ## De que trata
 
-Es uni aplicación sencilla centrada en los horoscopos
+Es un aplicación sencilla centrada en los horoscopos
 
