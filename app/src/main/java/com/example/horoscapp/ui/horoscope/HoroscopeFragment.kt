@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.horoscapp.databinding.FragmentHoroscopeBinding
 import com.example.horoscapp.ui.horoscope.adapter.HoroscopeAdapter
@@ -67,10 +69,13 @@ class HoroscopeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        horoscopeAdapter = HoroscopeAdapter()
+        horoscopeAdapter = HoroscopeAdapter(onItemSelected = {
+            Toast.makeText(context, getText(it.name), Toast.LENGTH_SHORT).show()
+        })
         //Con ésto se aplican todas las configuraciones sin tener que escribir bindin. cada vez
         binding.rvHoroscope.apply {
-            layoutManager = LinearLayoutManager(context)
+            //layoutManager = LinearLayoutManager(context) indica el como muestra la lista
+            layoutManager = GridLayoutManager(context, 2)
             adapter = horoscopeAdapter
         }
     }

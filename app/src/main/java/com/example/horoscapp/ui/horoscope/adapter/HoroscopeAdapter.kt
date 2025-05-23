@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.horoscapp.R
 import com.example.horoscapp.domain.model.HoroscopeInfo
 
-class HoroscopeAdapter(private var horoscopeList: List<HoroscopeInfo> = emptyList()) :
+//private val onItemSelected:() -> Unit es una forma de declarar un función lambda, lo que ésta en
+//parentesis es lo que le mando a la función
+class HoroscopeAdapter(private var horoscopeList: List<HoroscopeInfo> = emptyList(),
+    private val onItemSelected:(HoroscopeInfo) -> Unit) :
     RecyclerView.Adapter<HoroscopeViewHolder>() {
 
     fun updateList(list: List<HoroscopeInfo>) {
@@ -24,6 +27,6 @@ class HoroscopeAdapter(private var horoscopeList: List<HoroscopeInfo> = emptyLis
 
     //Le dice que es lo que tiene que pintar el viewHolder
     override fun onBindViewHolder(holder: HoroscopeViewHolder, position: Int) {
-        holder.render(horoscopeList[position])
+        holder.render(horoscopeList[position], onItemSelected)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.horoscapp.ui.horoscope
 
 import androidx.lifecycle.ViewModel
+import com.example.horoscapp.data.providers.HoroscopeProvider
 import com.example.horoscapp.domain.model.HoroscopeInfo
 import com.example.horoscapp.domain.model.HoroscopeInfo.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class HoroscopeViewModel @Inject constructor() : ViewModel() {
+class HoroscopeViewModel @Inject constructor(horoscopeProvider: HoroscopeProvider) : ViewModel() {
 
     /**
      * Vacicamente estamos creando una lista mutable(que se puede modificar) que contiene
@@ -25,8 +26,6 @@ class HoroscopeViewModel @Inject constructor() : ViewModel() {
      */
     init {
         //Al valor del holder modificable le agregamos una lista
-        _horoscope.value = listOf(
-            Tauro, Aries, Geminis
-        )
+        _horoscope.value = horoscopeProvider.getHoroscopes()
     }
 }
