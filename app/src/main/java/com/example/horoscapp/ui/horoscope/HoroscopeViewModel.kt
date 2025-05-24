@@ -9,6 +9,24 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
+/**---------TODO:Éste se crea a la par del fragment y tiene los siguientes usos:
+ * Conservar datos durante cambios de configuración:
+ * Si el Fragment se destruye y vuelve a crearse (por ejemplo, al rotar la pantalla), el ViewModel
+ * sigue existiendo y mantiene los datos. Esto evita que tengas que volver a cargar o recalcular todo.
+ *
+ * Almacenar y gestionar datos para la UI:
+ * El ViewModel actúa como una especie de almacén de datos para el Fragment. Puedes guardar ahí
+ * listas, estados, índices seleccionados, flags, etc.
+ *
+ * Evitar lógica en la UI:
+ * Así mantienes tu Fragment limpio, sin lógica de negocio ni acceso directo a datos, lo que
+ * facilita pruebas, mantenimiento y escalabilidad.
+ *
+ * Facilitar la comunicación entre clases:
+ * Puede funcionar como puente entre el Repository (o Provider, en tu caso) y la interfaz (Fragment),
+ * proporcionando los datos ya preparados y observables con LiveData o StateFlow.
+ */
+
 @HiltViewModel
 class HoroscopeViewModel @Inject constructor(horoscopeProvider: HoroscopeProvider) : ViewModel() {
 

@@ -2,9 +2,12 @@ package com.example.horoscapp.domain.model
 
 import com.example.horoscapp.R
 
-/**Sirve de base de datos
+/**---------------------------TODO: CREADO LUEGO DEL HOROSCOPEVIEWMODEL------------------------------
+ * Sirve de base de datos
  * Cada signo del zodiaco será una subclase específica de esta clase, y llevará consigo su imagen
  * e identificador de nombre.
+ * Normalmente debe ser crado al principio pero en éste caso se creó luego de del viewModel de
+ * horoscope pporque fue necesario hasta ese moemento
  */
 
 sealed class HoroscopeInfo(val img: Int, val name: Int) {

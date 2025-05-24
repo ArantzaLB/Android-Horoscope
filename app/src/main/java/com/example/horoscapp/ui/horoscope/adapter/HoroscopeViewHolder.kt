@@ -33,8 +33,7 @@ class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private fun startRotationAnimation(view: View, newLambda: () -> Unit) {
         view.animate().apply {
             duration = 500
-            //Indica la secuencia de la animación, si la velocidad se va a mantener constante o se
-            //acelera
+            //Indica la secuencia de la animación, si la velocidad se va a mantener constante o se acelera
             interpolator = LinearInterpolator()
             rotationBy(360f)
             //Cuando termine la acción llama a la nueva función lamda

@@ -9,13 +9,21 @@ import com.example.horoscapp.R
 import com.example.horoscapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**-----------------------------TODO: PRIMERA EN SER CREADA--------------------------
+ *Es la actividad contenedora que aloja el NavHostFragment, es decir, el punto de entrada visual
+ * de tu app. Gracias a Navigation Component, se encarga de mostrar los distintos Fragments
+ * (como el de la lista y el de detalles) dentro de un único layout.
+ * Si bien fue creada primero, es necesario tener Navigation Component instalado y las fragments
+ * por lo menos creados (aunque estén en blanco) así como el todo: main_graph y el botton_menu
+ * todos esos elementos conforman la pantalla de inicio de la aplicación
+ */
 //Con ésto ahora puedo inyectarle cosas
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    //Permite acceder a la clase padre que controla todo lo de la navegación
+    //Permite acceder a la clase padre que controla todo lo de la navegación (no es creada por mi)
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

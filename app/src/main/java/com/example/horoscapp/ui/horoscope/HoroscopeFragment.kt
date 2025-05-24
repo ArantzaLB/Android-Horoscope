@@ -1,23 +1,29 @@
 package com.example.horoscapp.ui.horoscope
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.horoscapp.databinding.FragmentHoroscopeBinding
 import com.example.horoscapp.ui.horoscope.adapter.HoroscopeAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+
+/**-------------------------TODO: PRIMERO EN SER MODIFICADO-----------------------------------
+ * Al momento de ser configurado todo: el mainActivity
+ * se crearon los tres fragments con sus respectivos activity y se les configuró el binding
+ * así como su conexión con su viewModel.
+ * En el caso de éste hace uso de un recycler view y debe ser configurado su Adapter y su respectiva
+ * función lambda para navegar a HoroscopeDetailActivity con ayuda de Safe args y tras haber
+ * hecho la conexión en el todo: main_graph (se hace la conección y ahí se crean las id de forma automatica)
+ */
 
 @AndroidEntryPoint
 class HoroscopeFragment : Fragment() {
@@ -27,7 +33,7 @@ class HoroscopeFragment : Fragment() {
      *                              de vida del fragmento o actividad. O reutilizarla si ya existe
      * by: “usa lo que retorne viewModels<>() para inicializar esta propiedad”.
      */
-    private val horoscopeViewMode by viewModels<HoroscopeViewModel>()
+    private val horoscopeViewModel by viewModels<HoroscopeViewModel>()
 
     /**
      * Declara una variable privada y opcional (nullable) para almacenar el binding.
@@ -68,9 +74,19 @@ class HoroscopeFragment : Fragment() {
         initUiState()
     }
 
+    //La función inicia el recycler view que muestra la lista
     private fun initRecyclerView() {
+        //Aquí está la lamda
         horoscopeAdapter = HoroscopeAdapter(onItemSelected = {
-            Toast.makeText(context, getText(it.name), Toast.LENGTH_SHORT).show()
+            /**
+             * findNavController().navigate indica que navegue a lo que esté entre parentesis
+             * ésto aparece gracias a el safe args, automáticamente crea la clase
+             * HoroscopeFragmentDirections que permite acceder a la id que se creó al
+             * darle una dirección hacia donde navegar en la vista del main_graph
+             */
+            findNavController().navigate(
+                HoroscopeFragmentDirections.actionHoroscopeFragmentToHoroscopeDetailActivity()
+            )
         })
         //Con ésto se aplican todas las configuraciones sin tener que escribir bindin. cada vez
         binding.rvHoroscope.apply {
@@ -87,7 +103,7 @@ class HoroscopeFragment : Fragment() {
             //Cuando empiece el ciclo de vida
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 //Enganchate o collectea lo que hay en horoscope
-                horoscopeViewMode.horoscope.collect {
+                horoscopeViewModel.horoscope.collect {
                     //Cambios en horoscope (it es el nuevo listado)
                     horoscopeAdapter.updateList(it)
                 }
