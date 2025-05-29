@@ -12,6 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.horoscapp.databinding.FragmentHoroscopeBinding
+import com.example.horoscapp.domain.model.HoroscopeInfo
+import com.example.horoscapp.domain.model.HoroscopeInfo.*
+import com.example.horoscapp.domain.model.HoroscopeModel
 import com.example.horoscapp.ui.horoscope.adapter.HoroscopeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -78,14 +81,33 @@ class HoroscopeFragment : Fragment() {
     private fun initRecyclerView() {
         //Aquí está la lamda
         horoscopeAdapter = HoroscopeAdapter(onItemSelected = {
+            //Hacemos un when de tipo it(HoroscopeInfo), convertimos de HoroscpeInfo a HoroscopeModel
+            val type = when (it) {
+                Aquarius -> HoroscopeModel.Aquarius
+                Aries -> HoroscopeModel.Aries
+                Cancer -> HoroscopeModel.Cancer
+                Capricornio -> HoroscopeModel.Capricorn
+                Escorpio -> HoroscopeModel.Scorpio
+                Gemini -> HoroscopeModel.Gemini
+                Leo -> HoroscopeModel.Leo
+                Libra -> HoroscopeModel.Libra
+                Picis -> HoroscopeModel.Pisces
+                Sagitario -> HoroscopeModel.Sagittarius
+                Taurus -> HoroscopeModel.Taurus
+                Virgo -> HoroscopeModel.Virgo
+            }
             /**
              * findNavController().navigate indica que navegue a lo que esté entre parentesis
              * ésto aparece gracias a el safe args, automáticamente crea la clase
              * HoroscopeFragmentDirections que permite acceder a la id que se creó al
-             * darle una dirección hacia donde navegar en la vista del main_graph
+             * darle una dirección hacia donde navegar en la vista del main_graph, además pide
+             * una variable, en este caso de nombre type(almacena el when), ésto se le agregó desde
+             * el main_graph al HoroscopeDetailActivity, de ésta manera al dar clic e ingresar
+             * a la activity de detail ésta recibe el tipo de icono al que le diste clic y sabrá
+             * que información cargar
              */
             findNavController().navigate(
-                HoroscopeFragmentDirections.actionHoroscopeFragmentToHoroscopeDetailActivity()
+                HoroscopeFragmentDirections.actionHoroscopeFragmentToHoroscopeDetailActivity(type)
             )
         })
         //Con ésto se aplican todas las configuraciones sin tener que escribir bindin. cada vez

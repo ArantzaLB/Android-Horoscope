@@ -62,4 +62,11 @@ dependencies {
     //DaggerHilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation (libs.converter.gson)
+
+    //LoginInterceptor
+    implementation(libs.logging.interceptor)
 }
