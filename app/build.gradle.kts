@@ -21,13 +21,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    /**
+     * Los buildTypes son como entornos donde se corre la App, el release es la principal y en ella
+     * le decimos que la url para conectar con la api es tal, en cambio en la de debug es una
+     * diferente, basicamente es para hacer pruebas
+     */
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            resValue("string", "arantzaName", "HoroscApp")
+            buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
+        }
+
+        getByName("debug"){
+            isDebuggable = true
+
+            resValue("string", "arantzaName", "[DEBUG] HoroscApp")
+            buildConfigField("String", "BASE_URL", "\"https://newastro-debug.vercel.app/\"")
         }
     }
     compileOptions {
@@ -41,6 +57,7 @@ android {
     //Activa el viewBinding
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -65,7 +82,7 @@ dependencies {
 
     //Retrofit
     implementation(libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.converter.gson)
 
     //LoginInterceptor
     implementation(libs.logging.interceptor)
