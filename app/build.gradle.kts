@@ -39,7 +39,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
 
-        getByName("debug"){
+        getByName("debug") {
             isDebuggable = true
 
             resValue("string", "arantzaName", "[DEBUG] HoroscApp")
@@ -86,4 +86,14 @@ dependencies {
 
     //LoginInterceptor
     implementation(libs.logging.interceptor)
+
+    //Camera X
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+
+    implementation(libs.androidx.camera.lifecycle)
+    //implementation("androidx.camera:camera-video:${camerax_version}")
+    implementation(libs.androidx.camera.view)
+    //implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
+    implementation(libs.androidx.camera.extensions)
 }
