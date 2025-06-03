@@ -27,6 +27,11 @@ import javax.inject.Inject
  * proporcionando los datos ya preparados y observables con LiveData o StateFlow.
  */
 
+/**
+ * @Inject constructor() permite injectarle alguna clase, etc
+ * : ViewModel() extiende la clase, de ésta manera nuestra clase tiene todas las propiedades de
+ * un ViewModel
+ */
 @HiltViewModel
 class HoroscopeViewModel @Inject constructor(horoscopeProvider: HoroscopeProvider) : ViewModel() {
 

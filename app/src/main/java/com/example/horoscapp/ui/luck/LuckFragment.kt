@@ -2,6 +2,8 @@ package com.example.horoscapp.ui.luck
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,7 +18,10 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
 import com.example.horoscapp.R
 import com.example.horoscapp.databinding.FragmentLuckBinding
+import com.example.horoscapp.ui.core.listeners.OnSwipeTouchListener
+import com.example.horoscapp.ui.providers.RandomCardProvider
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
@@ -37,6 +42,9 @@ class LuckFragment : Fragment() {
      */
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var ramdomCardProvider: RandomCardProvider
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,12 +60,50 @@ class LuckFragment : Fragment() {
         initUI()
     }
 
+    //Inicia la IU: le dice que vaya preparando las prediccionaes y que inicie los listeners
     private fun initUI() {
+        preparePrediction()
         initListeners()
     }
 
+    private fun preparePrediction() {
+        val currentLuck = ramdomCardProvider.getLucky()
+        //Al poner el ?.let nos aseguramos de que se un dato no nullable
+        currentLuck?.let { luck ->
+            val currentPrediction = getString(luck.text)
+            binding.tvLucky.text = currentPrediction
+            binding.ivLuckyCard.setImageResource(luck.image)
+            binding.tvShare.setOnClickListener { shareResult(currentPrediction) }
+        }
+
+    }
+
+    private fun shareResult(prediction: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, prediction)
+            type = "text/plain"
+        }
+
+        //createChooser es el selecionador
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
-        binding.ivRoulette.setOnClickListener { spinRoulette() }
+        //binding.ivRoulette.setOnClickListener { spinRoulette() }
+        //Aquí implementamos el listener que creamos a mano
+        binding.ivRoulette.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeRight() {
+                spinRoulette()
+            }
+
+            override fun onSwipeLeft() {
+                spinRoulette()
+            }
+        })
     }
 
     //Solo hace que gire la ruleta
@@ -87,6 +133,7 @@ class LuckFragment : Fragment() {
             override fun onAnimationStart(animation: Animation?) {
                 binding.ivRoulette.isVisible = true
             }
+
             //Cuando la a imación termina, hace crecer la carta llamando a una función
             override fun onAnimationEnd(animation: Animation?) {
                 growCard()
@@ -105,7 +152,7 @@ class LuckFragment : Fragment() {
     private fun growCard() {
         val growAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.grow)
 
-        growAnimation.setAnimationListener(object : Animation.AnimationListener{
+        growAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
 
             override fun onAnimationEnd(animation: Animation?) {
@@ -129,7 +176,7 @@ class LuckFragment : Fragment() {
         val appearAnimation = AlphaAnimation(0.0f, 1.0f)
         appearAnimation.duration = 1000
 
-        disappearAnimation.setAnimationListener(object: Animation.AnimationListener{
+        disappearAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
 
             override fun onAnimationEnd(animation: Animation?) {
