@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.horoscapp.CustomTestRunner"
     }
 
     /**
@@ -71,10 +71,19 @@ dependencies {
 
     //UnitTesting
     testImplementation(libs.junit)
-    testImplementation (libs.kotlintest.runner.junit5)
+    testImplementation(libs.kotlintest.runner.junit5)
     testImplementation(libs.junit.jupiter)
-    testImplementation (libs.mockk)
+    testImplementation(libs.mockk)
     testImplementation("net.bytebuddy:byte-buddy:1.14.5")
+
+    //UITesting
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
+    androidTestImplementation("androidx.fragment:fragment-testing:1.6.1")
+
 
 
     //
