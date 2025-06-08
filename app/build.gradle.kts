@@ -68,7 +68,16 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    //UnitTesting
     testImplementation(libs.junit)
+    testImplementation (libs.kotlintest.runner.junit5)
+    testImplementation(libs.junit.jupiter)
+    testImplementation (libs.mockk)
+    testImplementation("net.bytebuddy:byte-buddy:1.14.5")
+
+
+    //
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 

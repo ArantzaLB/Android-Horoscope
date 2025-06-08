@@ -13,7 +13,7 @@ data class PredictionResponse(
     @SerializedName("horoscope") val horoscope: String,
     @SerializedName("sign") val sign: String
 ){
-    fun toDamain():PredictionModel{
+    fun toDomain():PredictionModel{
         return PredictionModel(
             horoscope = horoscope,
             sign = sign
